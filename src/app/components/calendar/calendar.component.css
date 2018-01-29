@@ -1,0 +1,97 @@
+.m-top-sm{
+  margin-top: 10px;
+}
+.m-top-md{
+  margin-top: 30px;
+}
+.m-top-lg{
+  margin-top: 60px;
+}
+.m-btm-sm{
+  margin-bottom: 10px;
+}
+.m-btm-md{
+  margin-bottom: 30px;
+}
+.m-btm-lg{
+  margin-bottom: 60px;
+}
+.m-btm-xlg{
+  margin-bottom: 120px;
+}
+
+.cal-day-selected,
+.cal-day-selected:hover {
+  background-color: #faffad !important;
+}
+.right {
+    position: absolute;
+    right: 0px;
+}
+.pos-abs {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+.pos-rel {
+  position:relative;
+}
+
+.circle {
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+  font-size: 30px;
+  text-align: center;
+  line-height: 45px;
+}
+
+.background-div{
+  background-color: #f4f8ff;
+}
+
+.center{
+  text-align: center;
+}
+
+.pad-vert-sm{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.pad-bottom-large{
+  padding-bottom: 120px;
+}
+
+.side-margin{
+  display: block;
+  width: 50%;
+  background-color: #f8f8ff;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.side-margin-bottom{
+  display: block;
+  width: 75%;
+  background-color: #add7ff;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 120px;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+:required  {
+background: url(https://cdn0.iconfinder.com/data/icons/fugue/icon/asterisk-small.png) no-repeat;
+background-position:right top;
+}

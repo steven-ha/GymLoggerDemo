@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="jumbotron bg-transparent text-center">
+    <div *ngIf="authService.serverUser" class="card text-center">
+      <h6 class="card-header">
+        User Profile
+      </h6>
+      <div class="card-block"></div>
+      <img class="card-img-top img-responsive photo" src="{{ authService.user.photoUrl }}">
+      <div class="card-block">
+        <h4 class="card-title">{{ authService.serverUser.email }}</h4>
+        <p class="card-text">{{ authService.serverUser.firstName }} {{ authService.serverUser.lastName }}</p>
+      </div>
+    </div>
+  </div>
+</div>

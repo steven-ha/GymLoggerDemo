@@ -1,0 +1,13 @@
+<div class="jumbotron bg-transparent text-center">
+  <div *ngIf="!userAuthService.user" class="card text-center">
+    <h6 class="card-header">
+      Log In
+    </h6>
+    <div class="card-block">
+    </div>
+    <div class="card-block">
+      <button class="btn btn-social-icon btn-google" (click)="userAuthService.signInWithGoogle()"><img [src]="googleSignInImg"></button>
+      <!--<button class="btn btn-social-icon btn-facebook" (click)="userAuthService.signInWithFB()"><span class="fa fa-facebook fa-5x"></span></button>-->
+    </div>
+  </div>
+</div>

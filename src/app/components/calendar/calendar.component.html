@@ -1,0 +1,495 @@
+<!-- modal used for user input to create session -->
+<ng-template #sessionModal let-close="close">
+
+  <div class="modal-header">
+    <h5 class="modal-title">Create Session</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="container">
+      <div [hidden]="submitted">
+
+        <!-- form asking user to define session -->
+        <form (ngSubmit)="onSubmit()" #sessionForm="ngForm">
+
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name"
+                   required
+                   minlength="4"
+                   [(ngModel)]="tempSessionName" name="name"
+                   #name="ngModel">
+
+            <!-- display alert if the user input is not sufficient -->
+            <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                 class="alert alert-danger">
+              <!-- user input cannot be empty -->
+              <div *ngIf="name.errors.required">
+                Name is required.
+              </div>
+              <!-- input has to 4 characters or longer -->
+              <div *ngIf="name.errors.minlength">
+                Name must be at least 4 characters long.
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success" [disabled]="!sessionForm.form.valid" (click)="createSession();">Submit</button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">Cancel</button>
+  </div>
+
+</ng-template>
+
+<!-- modal used for user input to create session -->
+<ng-template #updateSessionModal let-close="close">
+
+  <div class="modal-header">
+    <h5 class="modal-title">Update Session</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="container">
+      <div [hidden]="submitted">
+
+        <!-- form asking user to define session -->
+        <form (ngSubmit)="onSubmit()" #updateSessionForm="ngForm">
+
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name"
+                   required
+                   minlength="4"
+                   [(ngModel)]="tempSessionName" name="name"
+                   #name="ngModel"
+                   >
+
+
+
+            <!-- display alert if the user input is not sufficient -->
+            <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                 class="alert alert-danger">
+              <!-- user input cannot be empty -->
+              <div *ngIf="name.errors.required">
+                Name is required.
+              </div>
+              <!-- input has to 4 characters or longer -->
+              <div *ngIf="name.errors.minlength">
+                Name must be at least 4 characters long.
+              </div>
+            </div>
+          </div>
+
+          <!-- show update button only if the user touched the input field-->
+          <button *ngIf="name.dirty" type="submit" class="btn btn-success" [disabled]="!updateSessionForm.form.valid" (click)="updateSession();">Update</button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">Cancel</button>
+  </div>
+
+</ng-template>
+
+<!-- modal used for user input to create session -->
+<ng-template #updateWorkoutModal let-close="close">
+
+  <div class="modal-header">
+    <h5 class="modal-title">Update Workout</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="container">
+      <div [hidden]="submitted">
+
+        <!-- form asking user to define session -->
+        <form (ngSubmit)="onSubmit()" #updateWorkoutForm="ngForm">
+
+
+          <!-- define group type -->
+          <div *ngIf="currentGroup.type == 'Boulder'" class="form-group">
+            <label for="grade">Boulder Grade</label>
+            <select class="form-control"
+                    required
+                    [(ngModel)]="tempWorkoutName"
+                    #type="ngModel"
+                    name="grade">
+              <option value="" selected default>--     select a grade    --</option>
+              <option *ngFor="let grade of boulderGradeArr" [ngValue]="grade">{{ grade }}</option>
+
+            </select>
+          </div>
+
+          <div *ngIf="currentGroup.type == 'Sport'" class="form-group">
+            <label for="grade">Sport Grade</label>
+            <select class="form-control"
+                    required
+                    [(ngModel)]="tempWorkoutName"
+                    #type="ngModel"
+                    name="grade">
+              <option value="" selected default>--     select a grade    --</option>
+              <option *ngFor="let grade of sportGradeArr" [ngValue]="grade">{{ grade }}</option>
+
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="set">Sets</label>
+            <select class="form-control"
+              required
+              [(ngModel)]="tempWorkoutSets"
+              #set="ngModel"
+              name="set">
+              <option *ngFor="let set of numArr" [ngValue]="set">{{ set }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reps">Reps</label>
+            <select class="form-control"
+              required
+              [(ngModel)]="tempWorkoutReps"
+              #reps="ngModel"
+              name="reps">
+              <option *ngFor="let rep of numArr" [ngValue]="rep">{{ rep }}</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-success" [disabled]="!updateWorkoutForm.form.valid" (click)="updateWorkout();">Submit</button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">Cancel</button>
+  </div>
+
+</ng-template>
+
+<!-- modal used for user input to create group -->
+<ng-template #groupModal let-close="close">
+
+  <div class="modal-header">
+    <h5 class="modal-title">Create Group</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="container">
+      <div [hidden]="submitted">
+
+        <!-- form asking user to define session -->
+        <form (ngSubmit)="onSubmit()" #groupForm="ngForm">
+
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name"
+                   required
+                   minlength="4"
+                   [(ngModel)]="tempGroupName" name="name"
+                   #name="ngModel">
+
+            <!-- display alert if the user input is not sufficient -->
+            <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                 class="alert alert-danger">
+              <!-- user input cannot be empty -->
+              <div *ngIf="name.errors.required">
+                Name is required.
+              </div>
+              <!-- input has to 4 characters or longer -->
+              <div *ngIf="name.errors.minlength">
+                Name must be at least 4 characters long.
+              </div>
+            </div>
+          </div>
+
+          <!-- define group type -->
+          <div class="form-group">
+            <label for="type">Workout Type</label>
+            <select class="form-control"
+                    required
+                    [(ngModel)]="tempGroupType"
+                    #type="ngModel"
+                    name="type">
+              <option value="" selected default>--     select a type    --</option>
+              <option *ngFor="let type of groupTypeArr" [ngValue]="type">{{ type }}</option>
+
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-success" [disabled]="!groupForm.form.valid" (click)="createGroup();">Submit</button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="groupForm.reset(); close();">Cancel</button>
+  </div>
+
+</ng-template>
+
+<!-- modal used for user input to create boulder workout -->
+<ng-template #boulderModal let-close="close">
+
+  <div class="modal-header">
+    <h5 class="modal-title">Create Boulder Workout</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="container">
+      <div [hidden]="submitted">
+
+        <!-- form asking user to define session -->
+        <form (ngSubmit)="onSubmit()" #boulderForm="ngForm">
+
+
+          <!-- define group type -->
+          <div class="form-group">
+            <label for="grade">Boulder Grade</label>
+            <select class="form-control"
+                    required
+                    [(ngModel)]="tempWorkoutName"
+                    #type="ngModel"
+                    name="grade">
+              <option value="" selected default>--     select a grade    --</option>
+              <option *ngFor="let grade of boulderGradeArr" [ngValue]="grade">{{ grade }}</option>
+
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="set">Sets</label>
+            <select class="form-control"
+              required
+              [(ngModel)]="tempWorkoutSets"
+              #set="ngModel"
+              name="set">
+              <option *ngFor="let set of numArr" [ngValue]="set">{{ set }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reps">Reps</label>
+            <select class="form-control"
+              required
+              [(ngModel)]="tempWorkoutReps"
+              #reps="ngModel"
+              name="reps">
+              <option *ngFor="let rep of numArr" [ngValue]="rep">{{ rep }}</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-success" [disabled]="!boulderForm.form.valid" (click)="createWorkout();">Submit</button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="boulderForm.reset(); close();">Cancel</button>
+  </div>
+
+</ng-template>
+
+
+<!-- modal used for user input to create boulder workout -->
+<ng-template #sportModal let-close="close">
+
+  <div class="modal-header">
+    <h5 class="modal-title">Create Sport Climbing Workout</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="container">
+      <div [hidden]="submitted">
+
+        <!-- form asking user to define session -->
+        <form (ngSubmit)="onSubmit()" #sportForm="ngForm">
+
+
+          <!-- define group type -->
+          <div class="form-group">
+            <label for="grade">Sport Grade</label>
+            <select class="form-control"
+                    required
+                    [(ngModel)]="tempWorkoutName"
+                    #type="ngModel"
+                    name="grade">
+              <option value="" selected default>--     select a grade    --</option>
+              <option *ngFor="let grade of sportGradeArr" [ngValue]="grade">{{ grade }}</option>
+
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="set">Sets</label>
+            <select class="form-control"
+              required
+              [(ngModel)]="tempWorkoutSets"
+              #set="ngModel"
+              name="set">
+              <option *ngFor="let set of numArr" [ngValue]="set">{{ set }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reps">Reps</label>
+            <select class="form-control"
+              required
+              [(ngModel)]="tempWorkoutReps"
+              #reps="ngModel"
+              name="reps">
+              <option *ngFor="let rep of numArr" [ngValue]="rep">{{ rep }}</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-success" [disabled]="!sportForm.form.valid" (click)="createWorkout();">Submit</button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="boulderForm.reset(); close();">Cancel</button>
+  </div>
+
+</ng-template>
+
+<!-- calendar header -->
+<app-calendar-header
+  [(view)]="view"
+  [(viewDate)]="viewDate"
+  (viewDateChange)="updateMonth()">
+</app-calendar-header>
+
+<!-- calendar -->
+<div class="container">
+  <div class="pos-rel">
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="'month'"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (beforeViewRender)="beforeMonthViewRender($event)"
+        (dayClicked)="dayClicked($event.day)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="'week'"
+        [viewDate]="viewDate"
+        [events]="events">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="'day'"
+        [viewDate]="viewDate"
+        [events]="events"
+        (beforeViewRender)="beforeDayViewRender($event.body)"
+        (hourSegmentClicked)="hourSegmentClicked($event.date)">
+      </mwl-calendar-day-view>
+    </div>
+    <a class="btn btn-primary pos-abs circle" (click)="openSessionModal()">+</a>
+  </div>
+</div>
+
+<!-- table used to display session data to user -->
+<div  *ngIf="sessionId" class="container m-top-md m-bottom-xlg">
+
+  <div>
+    <h1 class="center">
+      {{ sessionName }}
+      <i class="fa fa-pencil" aria-hidden="true" (click)="openUpdateSessionModal()"></i>
+      <i class="fa fa-trash-o" aria-hidden="true" (click)="removeSession()"></i>
+    </h1>
+
+  </div>
+
+
+  <!-- create a table for each group contained in the session -->
+
+  <div class="m-bottom-md background-div container no-gutters" *ngFor="let group of groups, let i = index">
+    <div>
+      <h3 class="center pad-vert-sm" (click)="removeGroup(group)">
+        {{ group.name }} ({{ group.type }})
+        <i class="fa fa-trash-o fa" aria-hidden="true" (click)="removeGroup(group)"></i>
+      </h3>
+    </div>
+
+    <table class="table table-bordered">
+
+      <thead>
+        <tr scope="row">
+          <th>Name</th>
+          <th>Sets</th>
+          <th>Reps</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <!-- create row for each workout in the group -->
+      <tbody>
+        <tr scope="row" *ngFor="let workout of group.workouts, let k = index">
+          <td>{{ workout.name }}</td>
+          <td>{{ workout.sets }}</td>
+          <td>{{ workout.reps }}</td>
+          <td>
+            <div style="text-align : right">
+              <a><i class="fa fa-pencil fa" aria-hidden="true" (click)="openUpdateWorkoutModal(workout, group, k, i)"></i></a>
+              <a><i class="fa fa-trash-o fa" aria-hidden="true" (click)="removeWorkout(workout, group)"></i></a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr scope="row">
+          <td colspan="4" *ngIf="group.type == 'Boulder'"><a class="btn btn-secondary side-margin" (click)="openBoulderModal(group)">Create Boulder Workout</a></td>
+          <td colspan="4" *ngIf="group.type == 'Sport'"><a class="btn btn-secondary side-margin" (click)="openSportModal(group)">Create Sport Climbing Workout</a></td>
+        </tr>
+      </tfoot>
+
+    </table>
+
+  </div>
+
+  <!-- button to create a group for the session-->
+  <a class="btn btn-primary side-margin-bottom" (click)="openGroupModal()">Create Group</a>
+</div>
